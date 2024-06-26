@@ -1,18 +1,15 @@
 from typing import List, Tuple
 import tensorrt as trt
-
+import argparse
 import pycuda.driver as cuda
 import pycuda.autoinit
-import tensorrt as trt
 
 print(trt.__version__)
-
-trt_logger = trt.Logger(trt.Logger.VERBOSE)
-
 device = cuda.Device(0)
 device.compute_capability()
 
 def convert_onnx_to_trt_engine(onnx_file, trt_output_file, enable_int8_quantization:bool = False):
+  trt_logger = trt.Logger(trt.Logger.VERBOSE)
   EXPLICIT_BATCH = 1 << int(trt.NetworkDefinitionCreationFlag.EXPLICIT_BATCH)
 
   with trt.Builder(trt_logger) as builder, builder.create_network(EXPLICIT_BATCH) as network, builder.create_builder_config() as config:
@@ -50,5 +47,11 @@ def convert_onnx_to_trt_engine(onnx_file, trt_output_file, enable_int8_quantizat
       output_file.write(serialized_engine)
       trt_logger.log(trt.ILogger.INFO, "Serialization done")
 
-data_model_export_path = "model_export"
-convert_onnx_to_trt_engine(f"{data_model_export_path}/yolo_nas_s_custom.onnx", f"{data_model_export_path}/yolo_nas_s_custom.trt")
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Convert ONNX model to TensorRT engine')
+    parser.add_argument('--onnx-file', type=str, required=True, help='Path to the ONNX model file')
+    parser.add_argument('--trt-output-file', type=str, required=True, help='Path to save the TensorRT engine file')
+    parser.add_argument('--int8', action='store_true', help='Enable INT8 quantization')
+
+    args = parser.parse_args()
+    convert_onnx_to_trt_engine(args.onnx_file, args.trt_output_file, enable_int8_quantization=args.int8)
