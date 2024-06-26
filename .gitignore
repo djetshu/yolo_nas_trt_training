@@ -1,0 +1,17 @@
+# Ignore ONNX files
+*.onnx
+
+# Ignore TensorRT files
+*.trt
+
+# Ignore image files
+*.jpg
+*.png
+
+# Ignore all files inside /checkpoints/ and /dataset/
+/checkpoints/*
+/dataset/*
+
+# Do not ignore README.md in /checkpoints/ and /dataset/
+!/checkpoints/README.md
+!/dataset/README.md
