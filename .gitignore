@@ -15,3 +15,5 @@
 # Do not ignore README.md in /checkpoints/ and /dataset/
 !/checkpoints/README.md
 !/dataset/README.md
+
+/__pycache__
