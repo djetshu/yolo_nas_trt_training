@@ -50,5 +50,19 @@ To test the TensorRT model with a webcam in real-time, run:
 python test_trt.py --model-path model_export/yolo_nas_s_custom.trt
 ```
 
-## Additional Information
-For more details and troubleshooting, refer to the `README.md` file within the repository.
+## Workflow During and After Training
+
+### Training on PC
+It is highly recommended to train on a PC with decent GPU capabilities (e.g., GTX 1060 or better). Due to the large size of the required packages in this Anaconda environment, it is not recommended to train on the final deployment hardware, such as Jetson AGX Orin, due to memory restrictions.
+
+### Conversion of ONNX to TensorRT
+This step is performed to increase the processing speed of the model. Perform this conversion on the PC that will execute the final model (e.g., Jetson AGX Orin, PC, etc.).
+
+### Running on the Final PC or SBC
+The final model can be run as a simple Python script or as a ROS2 node, depending on your deployment requirements.
+
+## Contact Information
+
+For inquiries, collaboration opportunities, or questions feel free to contact:
+
+- **Email:** daffer.queque@outlook.com
